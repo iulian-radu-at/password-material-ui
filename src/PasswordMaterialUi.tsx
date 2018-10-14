@@ -1,94 +1,91 @@
-import * as React from 'react';
-import {isEmpty, isNil} from 'lodash';
-import PasswordField from './PasswordField';
-import RemoveValue from './RemoveValue';
-import SeeHidePassword from './SeeHidePassword';
+import * as React from "react";
+import { isEmpty, isNil } from "lodash";
+import PasswordField from "./PasswordField";
+import RemoveValue from "./RemoveValue";
+import SeeHidePassword from "./SeeHidePassword";
 
-class PasswordMaterialUi extends React.Component<PasswordMaterialUiProps, PasswordMaterialUiState> {
-    public state: PasswordMaterialUiState = {
-        isPasswordVisible: false
-    };
+class PasswordMaterialUi extends React.Component<
+  PasswordMaterialUiProps,
+  PasswordMaterialUiState
+> {
+  public state: PasswordMaterialUiState = {
+    isPasswordVisible: false
+  };
 
-    public render() {
-        const {id, label, placeholder, value} = this.props;
+  public render() {
+    const { id, label, placeholder, value } = this.props;
 
-        return (
-            <PasswordField
-                id={id}
-                type={this.getType()}
-                label={label}
-                placeholder={placeholder}
-                value={value}
-                onChange={this.handleChange}
-                startAdornment={this.getStartAdornament()}
-                endAdornment={this.getEndAdornament()}
-            />
-        );
+    return (
+      <PasswordField
+        id={id}
+        type={this.getType()}
+        label={label}
+        placeholder={placeholder}
+        value={value}
+        onChange={this.handleChange}
+        startAdornment={this.getStartAdornament()}
+        endAdornment={this.getEndAdornament()}
+      />
+    );
+  }
+
+  private getType(): string {
+    const { type } = this.props;
+
+    if (isNil(type)) {
+      return "text";
     }
 
-    private getType(): string {
-        const {type} = this.props;
-
-        if(isNil(type)){
-            return 'text';
-        }
-
-        if (type !== 'password') {
-            return type;
-        }
-
-        return this.state.isPasswordVisible ? 'text' : 'password';
+    if (type !== "password") {
+      return type;
     }
 
-    private getStartAdornament() {
-        if (this.props.type !== 'password') {
-            return null;
-        }
+    return this.state.isPasswordVisible ? "text" : "password";
+  }
 
-        return (
-            <SeeHidePassword
-                isPasswordVisible={this.state.isPasswordVisible}
-                onClick={this.handleHidePassword}
-            />
-        );
+  private getStartAdornament() {
+    if (this.props.type !== "password") {
+      return null;
     }
 
-    private getEndAdornament() {
-        if (isEmpty(this.props.value)) {
-            return null;
-        }
+    return (
+      <SeeHidePassword
+        isPasswordVisible={this.state.isPasswordVisible}
+        onClick={this.handlePasswordVisibility}
+      />
+    );
+  }
 
-        return <RemoveValue onClick={this.handleRemoveValue}/>;
+  private getEndAdornament() {
+    if (isEmpty(this.props.value)) {
+      return null;
     }
 
-    private handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.props.onChange(event.target.value);
-    };
+    return <RemoveValue onClick={this.handleRemoveValue} />;
+  }
 
-    private handleRemoveValue = () => {
-        this.props.onChange('');
-    };
+  private handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+    this.props.onChange(event.target.value);
 
-    private handleSeePassword = () => this.setState({
-        isPasswordVisible: true
-    });
+  private handleRemoveValue = () => this.props.onChange("");
 
-    private handleHidePassword = () => this.setState({
-        isPasswordVisible: false
+  private handlePasswordVisibility = (isPasswordVisible: boolean) =>
+    this.setState({
+      isPasswordVisible
     });
 }
 
 interface PasswordMaterialUiState {
-    isPasswordVisible: boolean;
+  isPasswordVisible: boolean;
 }
 
 export interface PasswordMaterialUiProps {
-    id?: string;
-    type?: string;
-    label: string;
-    value?: string;
-    placeholder?: string;
-    onChange: (value: string) => void;
-};
+  id?: string;
+  type?: string;
+  label: string;
+  value?: string;
+  placeholder?: string;
+  onChange: (value: string) => void;
+}
 
 export default PasswordMaterialUi;

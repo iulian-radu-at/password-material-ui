@@ -101,10 +101,6 @@ export default App;
 
 ## Changelog
 
-### 1.0.0
+### 1.0.2
 
 - password-material-ui is made publicly available
-
-### 1.0.1
-
-- Corrected the examples in the Readme

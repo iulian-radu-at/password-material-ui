@@ -11,7 +11,7 @@ class SeeHidePassword extends React.Component<SeePasswordProps> {
   public render() {
     return (
       <InputAdornment style={style} position="start">
-        <div aria-label={this.getAriaLabel()} onClick={this.props.onClick}>
+        <div aria-label={this.getAriaLabel()} onClick={this.handleClick}>
           <FontAwesome name={this.getIcon()} />
         </div>
       </InputAdornment>
@@ -27,11 +27,13 @@ class SeeHidePassword extends React.Component<SeePasswordProps> {
   private getIcon() {
     return this.props.isPasswordVisible ? "eye-slash" : "eye";
   }
+
+  private handleClick = () => this.props.onClick(!this.props.isPasswordVisible);
 }
 
 export interface SeePasswordProps {
   isPasswordVisible: boolean;
-  onClick: () => void;
+  onClick: (isPasswordVisible: boolean) => void;
 }
 
 export default SeeHidePassword;
