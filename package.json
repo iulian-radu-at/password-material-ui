@@ -1,6 +1,6 @@
 {
   "name": "password-material-ui",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A material-ui PASSWORD component which allows to see/hide the input text of the field",
   "main": "lib/index.js",
   "sideEffects": false,
